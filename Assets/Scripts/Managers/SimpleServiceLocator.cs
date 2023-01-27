@@ -24,7 +24,13 @@ public class SimpleServiceLocator : MonoBehaviour
     {
         foreach (var monoBehaviour in instancesToInitialize)
         {
-            _objects.Add(monoBehaviour.GetType(), monoBehaviour);
+            int i = 0;
+            var type = monoBehaviour.GetType();
+            do
+            {
+                _objects.Add(type, monoBehaviour);
+                type = type.BaseType;
+            } while (type != typeof(object) && type!= typeof(MonoBehaviour));
         }
     }
 }

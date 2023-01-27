@@ -1,10 +1,19 @@
 using System;
-using UnityEngine.Events;
 
 namespace Data
 {
     public class SimpleObserver<T>
     {
+        public SimpleObserver(T value)
+        {
+            _value = value;
+        }
+
+        public SimpleObserver()
+        {
+            
+        }
+
         public event Action<T> OnChanged; 
         private T _value;
 

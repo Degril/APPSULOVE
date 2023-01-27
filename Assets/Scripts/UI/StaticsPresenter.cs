@@ -5,9 +5,10 @@ namespace UI
     public class StaticsPresenter : MonoBehaviour
     {
         [SerializeField] private StatisticsView statisticsView;
-        private readonly Statistics _statistics = new();
+        private Statistics _statistics;
         public void Start()
         {
+            _statistics = new Statistics();
             if (SimpleServiceLocator.TryGet<RandomSpawner>(out var randomSpawner))
             {
                 randomSpawner.OnObjectCreated += SubscribeToDestroyObject;
@@ -17,8 +18,8 @@ namespace UI
                 circleMover.OnObjectMoved += _statistics.AddDistance;
             }
 
-            statisticsView.distanceText.text = "0";
-            statisticsView.destroysCount.text  = "0";
+            UpdateDistanceText(_statistics.TotalDistance.Value);
+            UpdateDestroysText(_statistics.TotalDestroysCount.Value);
             _statistics.TotalDistance.OnChanged += UpdateDistanceText;
             _statistics.TotalDestroysCount.OnChanged += UpdateDestroysText;
         }
